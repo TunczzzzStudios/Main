@@ -5,298 +5,254 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tunczzzz Studios</title>
     
-    <meta name="theme-color" content="#030303">
+    <meta name="theme-color" content="#000000">
     <meta name="description" content="Tunczzzz Studios - Premium Virtual Reality Experiences.">
-    <link rel="icon" type="image/webp" href="https://raw.githubusercontent.com/oewfhoiwefoweofw/turbo-parakeet/refs/heads/main/content.webp">
+    <link rel="icon" type="image/png" href="https://github.com/groenkemwfpk/Twocando/blob/main/Logo.png?raw=true">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg: #050505;
+            --accent: #4f86f7;
+            --accent-glow: #4f86f7aa;
+            --bg-deep: #050505;
+            --glass: rgba(255, 255, 255, 0.02);
             --border: rgba(255, 255, 255, 0.08);
-            --accent: #3b82f6; /* Studio Blue */
-            --accent-glow: rgba(59, 130, 246, 0.4);
-            --text-main: #ededed;
-            --text-muted: #888888;
-            --font-main: 'Inter', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: var(--font-main);
-            background-color: var(--bg);
-            /* Top spotlight effect */
-            background-image: radial-gradient(circle at 50% 0%, #1a1a2e 0%, var(--bg) 60%);
-            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-deep);
+            color: #fff;
             height: 100vh;
-            overflow: hidden; /* Locked until entry */
-            -webkit-font-smoothing: antialiased;
+            overflow: hidden;
         }
 
-        /* --- NOISE TEXTURE --- */
-        .noise {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-            pointer-events: none; z-index: 0; opacity: 0.4;
+        /* --- AMBIENT BACKGROUND --- */
+        .aurora {
+            position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(79, 134, 247, 0.15), transparent 60%);
+            animation: rotate 20s linear infinite;
+            z-index: 0; pointer-events: none;
         }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* --- ENTRY SCREEN --- */
+        /* RAIN */
+        #rain-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.7; }
+
+        /* --- ENTRY SCREEN (FIXED CENTERING) --- */
         #entry-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 9999;
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
-            transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .entry-content {
-            text-align: center; opacity: 0;
-            animation: fadeUp 1.2s ease forwards 0.3s;
+            transition: opacity 0.8s ease;
         }
 
         .entry-logo {
-            height: 90px; width: auto; margin-bottom: 30px;
+            width: 140px; height: auto;
+            margin-bottom: 40px;
             filter: drop-shadow(0 0 30px var(--accent-glow));
+            animation: float 4s ease-in-out infinite;
         }
 
         .entry-btn {
             background: transparent;
-            border: 1px solid rgba(255,255,255,0.2);
-            color: var(--text-main);
-            font-family: var(--font-mono); font-size: 0.8rem;
-            padding: 14px 40px;
+            color: #fff;
+            border: 1px solid var(--accent);
+            padding: 15px 50px;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 700;
             cursor: pointer;
-            letter-spacing: 3px; text-transform: uppercase;
-            transition: all 0.4s ease;
-            position: relative; overflow: hidden;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+            box-shadow: 0 0 20px rgba(79, 134, 247, 0.2);
         }
 
         .entry-btn:hover {
-            border-color: var(--accent);
-            box-shadow: 0 0 20px var(--accent-glow);
-            text-shadow: 0 0 8px var(--accent);
+            background: var(--accent);
+            box-shadow: 0 0 50px var(--accent);
+            color: #000;
         }
 
-        /* --- MAIN LAYOUT --- */
+        /* --- MAIN APP --- */
         #app-container {
-            opacity: 0; pointer-events: none;
-            transition: opacity 1.5s ease;
-            height: 100%; overflow-y: auto;
-            position: relative; z-index: 2;
+            position: relative; z-index: 2; height: 100%; overflow-y: auto;
+            opacity: 0; transition: opacity 1.5s ease; pointer-events: none;
         }
         #app-container.active { opacity: 1; pointer-events: all; }
 
-        .layout { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-
-        /* HEADER */
-        header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 100px; padding-bottom: 20px;
-            border-bottom: 1px solid var(--border);
+        /* NAV */
+        nav {
+            position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
+            background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(20px);
+            padding: 12px 30px; border-radius: 100px;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex; gap: 40px; align-items: center;
+            z-index: 100;
         }
+        nav img { height: 35px; }
+        nav a { color: #aaa; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: 0.3s; text-transform: uppercase; }
+        nav a:hover { color: #fff; text-shadow: 0 0 10px #fff; }
 
-        .brand { display: flex; align-items: center; gap: 15px; font-weight: 600; letter-spacing: -0.5px; }
-        .brand img { height: 45px; }
-
-        nav a {
-            color: var(--text-muted); text-decoration: none;
-            font-size: 0.9rem; font-weight: 500; margin-left: 30px;
-            transition: 0.3s; font-family: var(--font-mono);
-        }
-        nav a:hover { color: var(--text-main); text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; text-align: center; }
 
         /* HERO */
-        .hero { text-align: center; margin-bottom: 120px; }
-        
+        .hero { margin-top: 180px; margin-bottom: 120px; }
         .hero h1 {
-            font-size: 5rem; font-weight: 700; letter-spacing: -3px; line-height: 1;
-            background: linear-gradient(180deg, #fff 0%, #666 100%);
+            font-size: 6rem; line-height: 1; font-weight: 800;
+            background: linear-gradient(180deg, #fff, #888);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             margin-bottom: 20px;
+            filter: drop-shadow(0 0 30px rgba(255,255,255,0.1));
         }
-
         .hero p {
-            color: var(--text-muted); font-size: 1.2rem;
-            max-width: 600px; margin: 0 auto; line-height: 1.6;
+            font-size: 1.2rem; color: #888; max-width: 700px; margin: 0 auto; line-height: 1.6;
         }
+        .hero strong { color: #fff; font-weight: 600; }
 
         /* GRID */
-        .grid-label {
-            font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent);
-            margin-bottom: 30px; display: flex; align-items: center; gap: 10px;
+        .grid-header {
+            font-size: 0.9rem; color: var(--accent); letter-spacing: 3px; margin-bottom: 40px;
+            text-transform: uppercase; display: flex; align-items: center; gap: 20px; justify-content: center;
         }
-        .grid-label::after { content:''; flex:1; height:1px; background: linear-gradient(90deg, var(--border), transparent); }
+        .grid-header::before, .grid-header::after { content:''; width: 50px; height: 1px; background: var(--accent); opacity: 0.5; }
 
         .grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px; padding-bottom: 100px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px; padding-bottom: 100px; text-align: left;
         }
 
         /* CARDS */
         .card {
-            background: rgba(255, 255, 255, 0.015);
+            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.4) 100%);
             border: 1px solid var(--border);
-            height: 220px;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            text-decoration: none;
-            position: relative; overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            height: 280px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-decoration: none; position: relative; overflow: hidden;
+            transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .card:hover {
-            border-color: rgba(255,255,255,0.2);
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.03);
-            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 50px -10px rgba(79, 134, 247, 0.3);
         }
 
-        /* Subtle scanline on card hover */
-        .card::after {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.05), transparent);
-            transform: translateY(-100%); transition: 0.6s;
+        .card::before {
+            content:''; position: absolute; top:0; left:0; width:100%; height:100%;
+            background: radial-gradient(circle at center, var(--accent-glow), transparent 70%);
+            opacity: 0; transition: 0.4s;
         }
-        .card:hover::after { transform: translateY(100%); }
+        .card:hover::before { opacity: 0.2; }
 
-        .card h3 {
-            color: var(--text-main); font-weight: 600; font-size: 1.2rem;
-            margin-bottom: 10px; z-index: 2; letter-spacing: -0.5px;
+        .card h3 { color: #fff; font-size: 1.5rem; z-index: 2; margin-bottom: 15px; font-weight: 700; text-transform: uppercase; }
+        .card .btn {
+            font-size: 0.8rem; color: #fff; background: rgba(255,255,255,0.1);
+            padding: 8px 20px; z-index: 2; border: 1px solid rgba(255,255,255,0.2);
+            transition: 0.3s;
         }
+        .card:hover .btn { background: var(--accent); border-color: var(--accent); color: #000; }
 
-        .card .tag {
-            color: var(--accent); font-size: 0.7rem; font-family: var(--font-mono);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            padding: 4px 10px; border-radius: 100px;
-            z-index: 2; transition: 0.3s;
-        }
-        
-        .card:hover .tag { background: rgba(59, 130, 246, 0.1); border-color: var(--accent); }
+        footer { padding: 50px 0; color: #444; font-size: 0.8rem; border-top: 1px solid var(--border); }
 
-        footer {
-            border-top: 1px solid var(--border); padding: 60px 0; text-align: center;
-            color: var(--text-muted); font-size: 0.8rem; font-family: var(--font-mono);
-        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        @media(max-width:768px) {
-            .hero h1 { font-size: 3rem; }
-            header { flex-direction: column; align-items: flex-start; gap: 20px; }
-            nav a { margin: 0 20px 0 0; }
+        @media(max-width: 768px) {
+            .hero h1 { font-size: 3.5rem; }
+            nav { width: 90%; justify-content: space-between; gap: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="noise"></div>
-
+    <div class="aurora"></div>
+    <canvas id="rain-canvas"></canvas>
+    
     <audio id="audio-source" loop>
         <source src="https://r2.guns.lol/1cf3832a-2e82-49a9-8258-e09d0aff4220.mp3" type="audio/mpeg">
     </audio>
 
     <div id="entry-screen">
-        <div class="entry-content">
-            <img src="https://raw.githubusercontent.com/oewfhoiwefoweofw/turbo-parakeet/refs/heads/main/content-removebg-preview.png" alt="Logo" class="entry-logo">
-            <br>
-            <button class="entry-btn" onclick="enterSite()">Initialize</button>
-        </div>
+        <img src="https://github.com/groenkemwfpk/Twocando/blob/main/Logo.png?raw=true" alt="Logo" class="entry-logo">
+        <button class="entry-btn" onclick="enterSite()">Start</button>
     </div>
 
     <div id="app-container">
-        <div class="layout">
-            <header>
-                <div class="brand">
-                    <img src="https://raw.githubusercontent.com/oewfhoiwefoweofw/turbo-parakeet/refs/heads/main/content-removebg-preview.png" alt="TS">
-                    <span>TUNCZZZZ STUDIOS</span>
-                </div>
-                <nav>
-                    <a href="/Privacy-Policy/">Privacy Policy</a>
-                    <a href="mailto:tunczzzzbusiness@gmail.com">Contact</a>
-                </nav>
-            </header>
+        
+        <nav>
+            <img src="https://github.com/groenkemwfpk/Twocando/blob/main/Logo.png?raw=true" alt="Logo">
+            <div style="display: flex; gap: 20px;">
+                <a href="/Main/Privacy-Policy/">Privacy</a>
+                <a href="mailto:tunczzzzbusiness@gmail.com">Contact</a>
+            </div>
+        </nav>
 
+        <div class="container">
             <section class="hero">
-                <h1>Virtual Reality<br>Redefined.</h1>
-                <p>Creating high-fidelity immersive simulations for the Metaverse. Join the next generation of gaming.</p>
+                <h1>Immersive Fun<br>For Everyone.</h1>
+                <p>We create terrifyingly enjoyable experiences. From the horror of <strong>Lethal Ape</strong> to the chaos of <strong>Dread Baboon</strong>, we make VR games you won't forget.</p>
             </section>
 
-            <div class="grid-label">/// DEPLOYED APPLICATIONS</div>
-            
+            <div class="grid-header">Deployed Simulations</div>
+
             <div class="grid" id="games-grid">
-                <div style="grid-column:1/-1; text-align:center; padding:40px; color:#444; font-family:var(--font-mono);">
-                    FETCHING DATASTREAM...
+                <div style="grid-column:1/-1; text-align:center; padding:40px; color:#555;">
+                    Establishing Uplink...
                 </div>
             </div>
 
-            <footer>
-                <p>&copy; 2026 Tunczzzz Studios. All Rights Reserved.</p>
-            </footer>
+            <footer>© 2026 Tunczzzz Studios. All Rights Reserved.</footer>
         </div>
     </div>
 
     <script>
-        // 1. ENTRY ANIMATION
-        function enterSite() {
-            const overlay = document.getElementById('entry-screen');
-            const audio = document.getElementById('audio-source');
-            
-            // Audio Fade In Logic
-            audio.volume = 0;
-            audio.play().then(() => {
-                let vol = 0;
-                const fade = setInterval(() => {
-                    if (vol < 0.4) { vol += 0.02; audio.volume = vol; } 
-                    else { clearInterval(fade); }
-                }, 50);
-            }).catch(() => {});
+        // RAIN
+        const canvas=document.getElementById('rain-canvas'), ctx=canvas.getContext('2d');
+        let w,h; const drops=[];
+        function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;}
+        window.addEventListener('resize',resize); resize();
+        class Drop{
+            constructor(){this.reset();}
+            reset(){this.x=Math.random()*w;this.y=Math.random()*-h;this.speed=Math.random()*8+5;this.len=Math.random()*20+10;this.op=Math.random()*0.3;}
+            update(){this.y+=this.speed;if(this.y>h)this.reset();}
+            draw(){ctx.strokeStyle=`rgba(79, 134, 247, ${this.op})`;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(this.x,this.y);ctx.lineTo(this.x,this.y+this.len);ctx.stroke();}
+        }
+        for(let i=0;i<120;i++)drops.push(new Drop());
+        function anim(){ctx.clearRect(0,0,w,h);drops.forEach(d=>{d.update();d.draw();});requestAnimationFrame(anim);}
+        anim();
 
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                document.getElementById('app-container').classList.add('active');
-                document.body.style.overflow = 'auto';
-            }, 1000);
+        // ENTRY
+        function enterSite(){
+            const a=document.getElementById('audio-source'); a.volume=0.4; a.play().catch(()=>{});
+            const e=document.getElementById('entry-screen'); e.style.opacity='0';
+            setTimeout(()=>{e.style.display='none';document.getElementById('app-container').classList.add('active');document.body.style.overflow='auto';},800);
         }
 
-        // 2. DATA FETCHER
-        const API = "https://gist.githubusercontent.com/oewfhoiwefoweofw/092d479f51a3108bb0f54fbcbdc363af/raw/apps.json";
-
-        async function loadGames() {
-            const grid = document.getElementById('games-grid');
-            try {
-                const res = await fetch(`${API}?t=${Date.now()}`);
-                const data = await res.json();
-                
-                grid.innerHTML = '';
-                const ignore = ["My apps", "Overview", "Settings", "Activity", "Inbox"];
-
-                data.forEach((game, i) => {
-                    if(ignore.includes(game.name) || !game.url) return;
-
-                    const card = document.createElement('a');
-                    card.href = game.url; card.target = "_blank"; card.className = 'card';
-                    // Stagger animation
-                    card.style.opacity = '0'; 
-                    card.style.animation = `fadeUp 0.8s ease forwards ${i * 0.1}s`;
-
-                    card.innerHTML = `
-                        <h3>${game.name}</h3>
-                        <span class="tag">META STORE</span>
-                    `;
-                    grid.appendChild(card);
+        // DATA
+        const API = "https://gist.githubusercontent.com/groenkemwfpk/6a594e13cd2ede50fe9d25f28092f033/raw/apps.json";
+        async function load(){
+            try{
+                const r=await fetch(API+"?t="+Date.now()), d=await r.json(), g=document.getElementById('games-grid');
+                g.innerHTML=''; const bad=["My apps","Overview","Settings","Action required","Create","Inbox"];
+                d.forEach((x,i)=>{
+                    if(bad.includes(x.name)||!x.url)return;
+                    const c=document.createElement('a'); c.href=x.url; c.target="_blank"; c.className='card';
+                    c.style.opacity='0'; c.style.animation=`fadeUp 0.8s ease forwards ${i*0.1}s`;
+                    c.innerHTML=`<h3>${x.name}</h3><div class="btn">PLAY NOW</div>`;
+                    g.appendChild(c);
                 });
-            } catch(e) {
-                grid.innerHTML = '<div style="color:#555; text-align:center;">// CONNECTION SEVERED</div>';
-            }
+            }catch(e){document.getElementById('games-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;color:#555;">UPLINK FAILED</div>';}
         }
-
-        loadGames();
+        load();
     </script>
 </body>
 </html>
