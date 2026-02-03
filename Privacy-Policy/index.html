@@ -5,224 +5,223 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - Tunczzzz Studios</title>
     
-    <meta name="theme-color" content="#030303">
-    <link rel="icon" type="image/webp" href="https://raw.githubusercontent.com/oewfhoiwefoweofw/turbo-parakeet/refs/heads/main/content.webp">
+    <meta name="theme-color" content="#000000">
+    <link rel="icon" type="image/png" href="https://github.com/groenkemwfpk/Twocando/blob/main/Logo.png?raw=true">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg: #050505;
+            --accent: #4f86f7;
+            --accent-glow: #4f86f7aa;
+            --bg-deep: #050505;
+            --glass: rgba(255, 255, 255, 0.02);
             --border: rgba(255, 255, 255, 0.08);
-            --accent: #3b82f6;
-            --accent-glow: rgba(59, 130, 246, 0.4);
-            --text-main: #ededed;
-            --text-muted: #888888;
-            --font-main: 'Inter', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: var(--font-main);
-            background-color: var(--bg);
-            background-image: radial-gradient(circle at 50% 0%, #1a1a2e 0%, var(--bg) 60%);
-            color: var(--text-main);
-            height: 100vh; overflow: hidden;
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-deep);
+            color: #fff;
+            height: 100vh;
+            overflow: hidden;
             line-height: 1.8;
-            -webkit-font-smoothing: antialiased;
         }
 
-        .noise {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-            pointer-events: none; z-index: 0; opacity: 0.4;
+        .aurora {
+            position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(79, 134, 247, 0.15), transparent 60%);
+            animation: rotate 20s linear infinite; z-index: 0; pointer-events: none;
         }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* ENTRY */
+        #rain-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.7; }
+
+        /* ENTRY (CENTERED) */
         #entry-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 9999;
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
-            transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: opacity 0.8s ease;
         }
 
-        .entry-content { text-align: center; opacity: 0; animation: fadeUp 1.2s ease forwards 0.3s; }
-        .entry-logo { height: 90px; width: auto; margin-bottom: 30px; filter: drop-shadow(0 0 30px var(--accent-glow)); }
+        .entry-logo {
+            width: 140px; height: auto; margin-bottom: 40px;
+            filter: drop-shadow(0 0 30px var(--accent-glow));
+            animation: float 4s ease-in-out infinite;
+        }
 
         .entry-btn {
-            background: transparent; border: 1px solid rgba(255,255,255,0.2);
-            color: var(--text-main); font-family: var(--font-mono); font-size: 0.8rem;
-            padding: 14px 40px; cursor: pointer; letter-spacing: 3px; text-transform: uppercase;
-            transition: all 0.4s ease;
+            background: transparent; color: #fff; border: 1px solid var(--accent);
+            padding: 15px 50px; font-size: 1.2rem; text-transform: uppercase;
+            letter-spacing: 4px; font-weight: 700; cursor: pointer;
+            transition: 0.3s; box-shadow: 0 0 20px rgba(79, 134, 247, 0.2);
         }
-        .entry-btn:hover { border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
+        .entry-btn:hover { background: var(--accent); box-shadow: 0 0 50px var(--accent); color: #000; }
 
-        /* CONTENT */
-        #app-container { opacity: 0; pointer-events: none; transition: opacity 1.5s ease; height: 100%; overflow-y: auto; position: relative; z-index: 2; }
+        #app-container {
+            position: relative; z-index: 2; height: 100%; overflow-y: auto;
+            opacity: 0; transition: opacity 1.5s ease; pointer-events: none;
+        }
         #app-container.active { opacity: 1; pointer-events: all; }
 
-        .layout { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-
-        header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 80px; padding-bottom: 20px; border-bottom: 1px solid var(--border);
+        /* NAV */
+        nav {
+            position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
+            background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(20px);
+            padding: 12px 30px; border-radius: 100px;
+            border: 1px solid rgba(255,255,255,0.1); display: flex; gap: 40px; align-items: center;
+            z-index: 100;
         }
-        .brand { display: flex; align-items: center; gap: 15px; font-weight: 600; }
-        .brand img { height: 45px; }
-        .nav-link { color: var(--text-muted); text-decoration: none; font-family: var(--font-mono); font-size: 0.8rem; transition:0.3s; }
-        .nav-link:hover { color: var(--text-main); }
+        nav img { height: 35px; }
+        nav a { color: #aaa; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: 0.3s; text-transform: uppercase; }
+        nav a:hover { color: #fff; text-shadow: 0 0 10px #fff; }
 
-        h1 { font-size: 3.5rem; font-weight: 700; letter-spacing: -2px; margin-bottom: 10px; }
-        .meta-data { font-family: var(--font-mono); color: var(--accent); font-size: 0.8rem; margin-bottom: 60px; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
 
-        .section { margin-bottom: 60px; }
+        /* POLICY SHEET */
+        .policy-wrapper {
+            background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.6) 100%);
+            border: 1px solid var(--border); border-radius: 20px;
+            padding: 60px; margin-top: 150px; margin-bottom: 60px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 { font-size: 3.5rem; text-align: center; margin-bottom: 10px; font-weight: 800; letter-spacing: -2px; }
+        .meta { text-align: center; color: var(--accent); font-size: 0.85rem; letter-spacing: 3px; margin-bottom: 60px; text-transform: uppercase; }
+
+        .section { margin-bottom: 50px; }
         .section h2 {
-            font-family: var(--font-mono); font-size: 1rem; color: var(--text-muted);
-            margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;
-            display: flex; align-items: center; gap: 10px;
+            font-size: 1.2rem; color: #fff; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 15px;
         }
         .section h2::after { content:''; flex:1; height:1px; background: var(--border); }
-
-        .section p { color: #ccc; font-size: 1.05rem; margin-bottom: 20px; }
-        ul { margin-left: 0; list-style: none; }
-        li { margin-bottom: 10px; padding-left: 20px; position: relative; color: #bbb; }
-        li::before { content: '>'; position: absolute; left: 0; color: var(--accent); font-family: var(--font-mono); font-size: 0.8rem; }
         
-        .dynamic-list { color: #fff; font-weight: 500; border-bottom: 1px solid var(--accent); }
-
-        footer { border-top: 1px solid var(--border); padding: 60px 0; text-align: center; color: var(--text-muted); font-size: 0.8rem; font-family: var(--font-mono); }
-
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        p { color: #bbb; margin-bottom: 15px; font-size: 1.05rem; }
+        ul { list-style: none; padding-left: 10px; }
+        li { color: #999; margin-bottom: 10px; padding-left: 20px; position: relative; }
+        li::before { content: '>'; color: var(--accent); position: absolute; left: 0; font-weight: 800; }
         
-        @media(max-width:768px) {
-            header { flex-direction: column; align-items: flex-start; gap: 20px; }
-            h1 { font-size: 2.5rem; }
-        }
+        .highlight { color: #fff; font-weight: 700; text-decoration: underline; text-decoration-color: var(--accent); }
+
+        footer { text-align: center; padding: 50px 0; color: #444; border-top: 1px solid var(--border); }
+
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @media(max-width: 768px) { nav { width: 90%; justify-content: space-between; gap: 0; } h1 { font-size: 2.5rem; } }
     </style>
 </head>
 <body>
 
-    <div class="noise"></div>
+    <div class="aurora"></div>
+    <canvas id="rain-canvas"></canvas>
     <audio id="audio-source" loop>
         <source src="https://r2.guns.lol/1cf3832a-2e82-49a9-8258-e09d0aff4220.mp3" type="audio/mpeg">
     </audio>
 
     <div id="entry-screen">
-        <div class="entry-content">
-            <img src="https://raw.githubusercontent.com/oewfhoiwefoweofw/turbo-parakeet/refs/heads/main/content-removebg-preview.png" alt="Logo" class="entry-logo">
-            <br>
-            <button class="entry-btn" onclick="enterSite()">Read Protocol</button>
-        </div>
+        <img src="https://github.com/groenkemwfpk/Twocando/blob/main/Logo.png?raw=true" alt="Logo" class="entry-logo">
+        <button class="entry-btn" onclick="enterSite()">Start</button>
     </div>
 
     <div id="app-container">
-        <div class="layout">
-            <header>
-                <div class="brand">
-                    <img src="https://raw.githubusercontent.com/oewfhoiwefoweofw/turbo-parakeet/refs/heads/main/content-removebg-preview.png" alt="TS">
-                    <span>TUNCZZZZ STUDIOS</span>
+        
+        <nav>
+            <img src="https://github.com/groenkemwfpk/Twocando/blob/main/Logo.png?raw=true" alt="Logo">
+            <div style="display: flex; gap: 20px;">
+                <a href="/Main/">Home</a>
+                <a href="mailto:tunczzzzbusiness@gmail.com">Contact</a>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="policy-wrapper">
+                <h1>Privacy Policy</h1>
+                <div class="meta">Status: Active // Jan 2026</div>
+
+                <div class="section">
+                    <h2>01 Introduction</h2>
+                    <p><strong>Tunczzzz Studios Applications</strong>, including <span id="dyn-list-1" class="highlight">loading...</span> (“we,” “our,” or “us”), refer to the Virtual Reality (VR) games available on Meta platforms. We are committed to transparency.</p>
                 </div>
-                <a href="/" class="nav-link">Return Home</a>
-            </header>
 
-            <h1>Privacy Policy</h1>
-            <div class="meta-data">EFFECTIVE: JAN 29 2026 // STATUS: ACTIVE</div>
+                <div class="section">
+                    <h2>02 Data Collection</h2>
+                    <p>When you use <span id="dyn-list-2" class="highlight">our applications</span>, we collect:</p>
+                    <ul>
+                        <li><strong>Identity:</strong> In-game Username & PlayFab ID.</li>
+                        <li><strong>Location:</strong> Country of residence (Server Optimization).</li>
+                        <li><strong>Technical:</strong> IP address and connection quality data.</li>
+                    </ul>
+                </div>
 
-            <div class="section">
-                <h2>01. Introduction</h2>
-                <p><strong>Tunczzzz Studios Applications</strong>, including <span id="dyn-list-1" class="dynamic-list">loading...</span> (“we,” “our,” or “us”), refer to the Virtual Reality (VR) games available on Meta platforms. We are committed to protecting your privacy and ensuring transparency.</p>
+                <div class="section">
+                    <h2>03 Usage Protocols</h2>
+                    <p>Data is used exclusively to operate features, maintain cloud saves, and ensure fair play (Anti-Cheat).</p>
+                </div>
+
+                <div class="section">
+                    <h2>04 Third-Party Sharing</h2>
+                    <p>We share data only with essential infrastructure partners:</p>
+                    <ul>
+                        <li><strong>Microsoft (PlayFab):</strong> Backend Database.</li>
+                        <li><strong>Meta (Oculus):</strong> Platform Integration.</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h2>05 User Rights</h2>
+                    <p>You may request data deletion at any time by contacting us:</p>
+                    <a href="mailto:tunczzzzbusiness@gmail.com" style="color:#fff;">tunczzzzbusiness@gmail.com</a>
+                </div>
             </div>
 
-            <div class="section">
-                <h2>02. Data Collection</h2>
-                <p>When you use <span id="dyn-list-2" class="dynamic-list">our applications</span>, we collect:</p>
-                <ul>
-                    <li><strong>Identity:</strong> In-game Username & PlayFab ID (Microsoft).</li>
-                    <li><strong>Location:</strong> Country of residence for server region optimization.</li>
-                    <li><strong>Technical:</strong> IP address and connection quality data.</li>
-                </ul>
-            </div>
-
-            <div class="section">
-                <h2>03. Usage Protocols</h2>
-                <p>Data is used exclusively to operate features, maintain cloud saves, analyze game balance, and ensure fair play (Anti-Cheat).</p>
-            </div>
-
-            <div class="section">
-                <h2>04. Third-Party Sharing</h2>
-                <p>We do not sell data. We share only with essential infrastructure partners:</p>
-                <ul>
-                    <li><strong>Microsoft (PlayFab):</strong> Backend database & analytics.</li>
-                    <li><strong>Meta (Oculus):</strong> Platform integration (cloud saves).</li>
-                    <li><strong>Legal:</strong> Only if compelled by valid legal subpoenas.</li>
-                </ul>
-            </div>
-
-            <div class="section">
-                <h2>05. User Rights</h2>
-                <p>You retain full sovereignty over your data. Requests for deletion or inspection can be filed via email.</p>
-                <p style="margin-top: 20px;">
-                    <a href="mailto:tunczzzzbusiness@gmail.com" style="color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent);">tunczzzzbusiness@gmail.com</a>
-                </p>
-            </div>
-
-            <footer>
-                <p>© 2026 Tunczzzz Studios. All Rights Reserved.</p>
-            </footer>
+            <footer>© 2026 Tunczzzz Studios. All Rights Reserved.</footer>
         </div>
     </div>
 
     <script>
-        // 1. ENTRY
-        function enterSite() {
-            const overlay = document.getElementById('entry-screen');
-            const audio = document.getElementById('audio-source');
-            
-            audio.volume = 0;
-            audio.play().then(() => {
-                let vol = 0;
-                const fade = setInterval(() => {
-                    if (vol < 0.4) { vol += 0.02; audio.volume = vol; } 
-                    else { clearInterval(fade); }
-                }, 50);
-            }).catch(() => {});
+        // RAIN
+        const canvas=document.getElementById('rain-canvas'), ctx=canvas.getContext('2d');
+        let w,h; const drops=[];
+        function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;}
+        window.addEventListener('resize',resize); resize();
+        class Drop{
+            constructor(){this.reset();}
+            reset(){this.x=Math.random()*w;this.y=Math.random()*-h;this.speed=Math.random()*8+5;this.len=Math.random()*20+10;this.op=Math.random()*0.3;}
+            update(){this.y+=this.speed;if(this.y>h)this.reset();}
+            draw(){ctx.strokeStyle=`rgba(79, 134, 247, ${this.op})`;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(this.x,this.y);ctx.lineTo(this.x,this.y+this.len);ctx.stroke();}
+        }
+        for(let i=0;i<120;i++)drops.push(new Drop());
+        function anim(){ctx.clearRect(0,0,w,h);drops.forEach(d=>{d.update();d.draw();});requestAnimationFrame(anim);}
+        anim();
 
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                document.getElementById('app-container').classList.add('active');
-                document.body.style.overflow = 'auto';
-            }, 1000);
+        // ENTRY
+        function enterSite(){
+            const a=document.getElementById('audio-source'); a.volume=0.4; a.play().catch(()=>{});
+            const e=document.getElementById('entry-screen'); e.style.opacity='0';
+            setTimeout(()=>{e.style.display='none';document.getElementById('app-container').classList.add('active');document.body.style.overflow='auto';},800);
         }
 
-        // 2. DYNAMIC TEXT
-        async function loadData() {
-            try {
-                const req = await fetch("https://gist.githubusercontent.com/oewfhoiwefoweofw/092d479f51a3108bb0f54fbcbdc363af/raw/apps.json?t=" + Date.now());
-                const data = await req.json();
+        // DATA
+        const API = "https://gist.githubusercontent.com/groenkemwfpk/6a594e13cd2ede50fe9d25f28092f033/raw/apps.json";
+        async function load(){
+            try{
+                const r=await fetch(API+"?t="+Date.now()), d=await r.json();
+                const names=[]; const ignore=["My apps","Overview","Settings","Action required","Create"];
+                d.forEach(g=>{if(!ignore.includes(g.name))names.push(g.name)});
                 
-                const names = [];
-                const ignore = ["My apps", "Overview", "Settings"];
-                data.forEach(g => { if(!ignore.includes(g.name)) names.push(g.name); });
-
-                let text = "our applications";
-                if(names.length > 0) {
-                    text = names.length === 1 ? names[0] : 
-                           names.length === 2 ? names.join(" and ") : 
-                           names.slice(0, -1).join(", ") + ", and " + names[names.length - 1];
-                }
-
-                document.getElementById('dyn-list-1').textContent = text;
-                document.getElementById('dyn-list-2').textContent = text;
-            } catch(e) {}
+                let t="our applications";
+                if(names.length>0) t = names.length===1?names[0]:names.length===2?names.join(" and "):names.slice(0,-1).join(", ")+", and "+names[names.length-1];
+                
+                document.getElementById('dyn-list-1').textContent=t;
+                document.getElementById('dyn-list-2').textContent=t;
+            }catch(e){}
         }
-
-        loadData();
+        load();
     </script>
 </body>
 </html>
