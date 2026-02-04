@@ -27,6 +27,11 @@ This repository contains the source code for the "Cyber-Storm" aesthetic website
 
 ---
 
+### Credits 
+* **Design Inspiration:** "Xera" Aesthetic / High-Fidelity Dark Mode etc..
+* **AI Development:** Gemini (Google DeepMind) - Code Generation & Optimization.
+
+
 ## 📂 Project Structure
 
 ```text
@@ -36,3 +41,7 @@ This repository contains the source code for the "Cyber-Storm" aesthetic website
 │
 └── Privacy-Policy/
     └── index.html            # Dynamic Privacy Policy Page
+
+
+
+
