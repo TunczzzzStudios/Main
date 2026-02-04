@@ -41,7 +41,7 @@
 
         #rain-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.7; }
 
-        /* ENTRY (CENTERED) */
+        /* ENTRY */
         #entry-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 9999;
@@ -70,7 +70,6 @@
         }
         #app-container.active { opacity: 1; pointer-events: all; }
 
-        /* NAV */
         nav {
             position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
             background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(20px);
@@ -145,37 +144,82 @@
 
                 <div class="section">
                     <h2>01 Introduction</h2>
-                    <p><strong>Tunczzzz Studios Applications</strong>, including <span id="dyn-list-1" class="highlight">loading...</span> (“we,” “our,” or “us”), refer to the Virtual Reality (VR) games available on Meta platforms. We are committed to transparency.</p>
+                    <p><strong><span id="dyn-list-1" class="highlight">Loading applications...</span></strong> (“we,” “our,” or “us”) refer to the Virtual Reality (VR) games available on Meta platforms. We are committed to protecting your privacy and ensuring transparency in how we collect and use personal data through our game and related services (“application”).</p>
+                    <p>This Privacy Policy describes the personal data we collect from users of our application (including through Meta Quest and other Meta platforms), how we use that data, and the rights you have.</p>
                 </div>
 
                 <div class="section">
-                    <h2>02 Data Collection</h2>
-                    <p>When you use <span id="dyn-list-2" class="highlight">our applications</span>, we collect:</p>
+                    <h2>02 Data We Collect</h2>
+                    <p>When you use <span id="dyn-list-2" class="highlight">our applications</span>, we may collect the following types of data, either directly or via third-party services (e.g., Playfab):</p>
                     <ul>
-                        <li><strong>Identity:</strong> In-game Username & PlayFab ID.</li>
-                        <li><strong>Location:</strong> Country of residence (Server Optimization).</li>
-                        <li><strong>Technical:</strong> IP address and connection quality data.</li>
+                        <li>In-game username</li>
+                        <li>Country of residence</li>
+                        <li>Gameplay preferences and performance statistics</li>
+                        <li>IP address and technical information</li>
+                        <li>Any voluntarily submitted data (e.g., bug reports or support requests)</li>
                     </ul>
                 </div>
 
                 <div class="section">
-                    <h2>03 Usage Protocols</h2>
-                    <p>Data is used exclusively to operate features, maintain cloud saves, and ensure fair play (Anti-Cheat).</p>
-                </div>
-
-                <div class="section">
-                    <h2>04 Third-Party Sharing</h2>
-                    <p>We share data only with essential infrastructure partners:</p>
+                    <h2>03 How We Use Your Data</h2>
+                    <p>We use your data to:</p>
                     <ul>
-                        <li><strong>Microsoft (PlayFab):</strong> Backend Database.</li>
-                        <li><strong>Meta (Oculus):</strong> Platform Integration.</li>
+                        <li>Operate and provide features in the game</li>
+                        <li>Maintain account and progress tracking via Playfab</li>
+                        <li>Personalize gameplay and user experience</li>
+                        <li>Analyze performance and improve game mechanics</li>
+                        <li>Ensure fairness and detect abuse or cheating</li>
+                        <li>Comply with applicable laws and platform policies</li>
                     </ul>
                 </div>
 
                 <div class="section">
-                    <h2>05 User Rights</h2>
-                    <p>You may request data deletion at any time by contacting us:</p>
-                    <a href="mailto:tunczzzzbusiness@gmail.com" style="color:#fff;">tunczzzzbusiness@gmail.com</a>
+                    <h2>04 Data Sharing</h2>
+                    <p>We do not sell your data or share it for advertising purposes. We may share data:</p>
+                    <ul>
+                        <li>With Playfab (Microsoft) for backend and analytics services</li>
+                        <li>With Meta if required by their platform policies or integration (e.g., for cloud saves, achievements)</li>
+                        <li>As legally required (e.g., subpoenas, law enforcement requests)</li>
+                        <li>To protect our rights, users, or application integrity</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h2>05 Data Retention</h2>
+                    <p>We retain your personal data as long as necessary to provide game functionality and meet legal requirements. When data is no longer needed, it will be deleted or anonymized.</p>
+                </div>
+
+                <div class="section">
+                    <h2>06 User Rights and Data Deletion</h2>
+                    <p>You have the right to request access to, correction of, or deletion of your personal data. To make a request, please contact us at:</p>
+                    <p><a href="mailto:tunczzzzbusiness@gmail.com" style="color:#fff; text-decoration: underline;">📧 tunczzzzbusiness@gmail.com</a></p>
+                    <p>Please include your username and associated account information. We aim to respond within 30 days.</p>
+                </div>
+
+                <div class="section">
+                    <h2>07 Children’s Privacy</h2>
+                    <p>We comply with COPPA and do not knowingly collect more information from children under 13 than necessary. Parents may contact us to review or delete a child’s data.</p>
+                </div>
+
+                <div class="section">
+                    <h2>08 Security</h2>
+                    <p>We take reasonable technical and organizational steps to protect your personal data, including:</p>
+                    <ul>
+                        <li>Encrypted communication</li>
+                        <li>Restricted data access</li>
+                        <li>Regular monitoring for vulnerabilities</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h2>09 Changes to This Policy</h2>
+                    <p>We may update this Privacy Policy to reflect changes in legal or technical requirements. Updates will be posted in-game or on our official page, along with the new effective date.</p>
+                </div>
+
+                <div class="section">
+                    <h2>10 Contact</h2>
+                    <p>If you have any questions about this Privacy Policy or data handling practices related to our applications, please contact us at:</p>
+                    <a href="mailto:tunczzzzbusiness@gmail.com" style="color:#fff; text-decoration: underline;">📧 tunczzzzbusiness@gmail.com</a>
                 </div>
             </div>
 
@@ -184,7 +228,6 @@
     </div>
 
     <script>
-        // RAIN
         const canvas=document.getElementById('rain-canvas'), ctx=canvas.getContext('2d');
         let w,h; const drops=[];
         function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;}
@@ -199,15 +242,13 @@
         function anim(){ctx.clearRect(0,0,w,h);drops.forEach(d=>{d.update();d.draw();});requestAnimationFrame(anim);}
         anim();
 
-        // ENTRY
         function enterSite(){
             const a=document.getElementById('audio-source'); a.volume=0.4; a.play().catch(()=>{});
             const e=document.getElementById('entry-screen'); e.style.opacity='0';
             setTimeout(()=>{e.style.display='none';document.getElementById('app-container').classList.add('active');document.body.style.overflow='auto';},800);
         }
 
-        // DATA
-        const API = "https://gist.githubusercontent.com/TunczzzzStudios/6a594e13cd2ede50fe9d25f28092f033/raw/apps.json";
+        const API = "https://gist.githubusercontent.com/groenkemwfpk/6a594e13cd2ede50fe9d25f28092f033/raw/apps.json";
         async function load(){
             try{
                 const r=await fetch(API+"?t="+Date.now()), d=await r.json();
