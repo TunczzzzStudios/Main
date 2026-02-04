@@ -41,7 +41,7 @@
 
         #rain-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.7; }
 
-        /* ENTRY */
+        /* ENTRY (CENTERED) */
         #entry-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 9999;
@@ -70,6 +70,7 @@
         }
         #app-container.active { opacity: 1; pointer-events: all; }
 
+        /* NAV */
         nav {
             position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
             background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(20px);
@@ -150,7 +151,7 @@
 
                 <div class="section">
                     <h2>02 Data We Collect</h2>
-                    <p>When you use <span id="dyn-list-2" class="highlight">our applications</span>, we may collect the following types of data, either directly or via third-party services (e.g., Playfab):</p>
+                    <p>When you use <span id="dyn-list-2" class="highlight">our applications</span>, we may collect the following types of data, either directly or via third-party services (e.g., PlayFab):</p>
                     <ul>
                         <li>In-game username</li>
                         <li>Country of residence</li>
@@ -248,21 +249,46 @@
             setTimeout(()=>{e.style.display='none';document.getElementById('app-container').classList.add('active');document.body.style.overflow='auto';},800);
         }
 
-        const API = "https://gist.githubusercontent.com/groenkemwfpk/6a594e13cd2ede50fe9d25f28092f033/raw/apps.json";
-        async function load(){
-            try{
-                const r=await fetch(API+"?t="+Date.now()), d=await r.json();
-                const names=[]; const ignore=["My apps","Overview","Settings","Action required","Create"];
-                d.forEach(g=>{if(!ignore.includes(g.name))names.push(g.name)});
+        // UPDATED API URL
+        const API = "https://gist.githubusercontent.com/TunczzzzStudios/6a594e13cd2ede50fe9d25f28092f033/raw/apps.json";
+        
+        async function loadData() {
+            const list1 = document.getElementById('dyn-list-1');
+            const list2 = document.getElementById('dyn-list-2');
+
+            try {
+                const res = await fetch(API + "?t=" + Date.now());
+                if (!res.ok) throw new Error("Network response was not ok");
                 
-                let t="our applications";
-                if(names.length>0) t = names.length===1?names[0]:names.length===2?names.join(" and "):names.slice(0,-1).join(", ")+", and "+names[names.length-1];
-                
-                document.getElementById('dyn-list-1').textContent=t;
-                document.getElementById('dyn-list-2').textContent=t;
-            }catch(e){}
+                const data = await res.json();
+                const names = [];
+                const ignore = ["My apps", "Overview", "Settings", "Action required", "Create", "Inbox"];
+
+                data.forEach(g => {
+                    if (g.name && !ignore.includes(g.name)) {
+                        names.push(g.name);
+                    }
+                });
+
+                let text = "our applications"; 
+
+                if (names.length > 0) {
+                    if (names.length === 1) text = names[0];
+                    else if (names.length === 2) text = names.join(" and ");
+                    else text = names.slice(0, -1).join(", ") + ", and " + names[names.length - 1];
+                }
+
+                if (list1) list1.textContent = text;
+                if (list2) list2.textContent = text;
+
+            } catch (e) {
+                console.error("Failed to load names:", e);
+                if (list1) list1.textContent = "our applications";
+                if (list2) list2.textContent = "our applications";
+            }
         }
-        load();
+
+        loadData();
     </script>
 </body>
 </html>
